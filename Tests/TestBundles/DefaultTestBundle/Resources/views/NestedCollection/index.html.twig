@@ -1,0 +1,6 @@
+{% extends 'DefaultTestBundle::layout.html.twig' %}
+
+{% block body %}
+    <div id="extra_msg">{{ extraMsg|default('') }}</div>
+    {{ form(form) }}
+{% endblock %}

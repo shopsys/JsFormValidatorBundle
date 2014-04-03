@@ -31,7 +31,7 @@ class TagEntity
     private $title;
 
     /**
-     * @var TagEntity
+     * @var TaskEntity
      *
      * @ORM\ManyToOne(targetEntity="TaskEntity", inversedBy="tags")
      * @ORM\JoinColumn(name="task_id", referencedColumnName="id")
