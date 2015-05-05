@@ -6,6 +6,7 @@ use Symfony\Bundle\SecurityBundle\SecurityBundle;
 use Symfony\Bundle\TwigBundle\TwigBundle;
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
+use Symfony\Bundle\MonologBundle\MonologBundle;
 
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
@@ -27,6 +28,7 @@ class AppKernel extends Kernel
             new AsseticBundle(),
             new DoctrineBundle(),
             new MinkBundle(),
+            new MonologBundle(),
 
             new DefaultTestBundle()
         );

@@ -38,3 +38,4 @@ script: phpunit -v
 #  - php vendor/bin/coveralls -v
 after_failure:
   - cat selenium.log
+  - tail -n +1 Tests/app/logs/*

@@ -71,6 +71,18 @@ $container->loadFromExtension(
         'selenium2' => array(),
     )
 );
+$container->loadFromExtension(
+    'monolog',
+    array(
+        'handlers' => array(
+            'main' => array(
+                'type' => 'stream',
+                'path' => '%kernel.logs_dir%/%kernel.environment%.log',
+                'level' => 'error'
+            )
+        )
+    )
+);
 
 if (!empty($bundleConfig)) {
     $container->loadFromExtension('fp_js_form_validator', $bundleConfig);
