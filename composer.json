@@ -1,9 +1,9 @@
 {
-    "name": "fp/jsformvalidator-bundle",
+    "name": "shopsys/jsformvalidator-bundle",
     "type": "symfony-bundle",
-    "description": "Javascript validation for sf[2|3|4] forms.",
+    "description": "Javascript validation for Symfony forms.",
     "keywords": ["Symfony", "Form", "Javascript", "Validation"],
-    "homepage": "https://github.com/formapro/JsFormValidatorBundle",
+    "homepage": "https://github.com/shopsys/JsFormValidatorBundle",
     "license": "MIT",
     "authors": [
         {
@@ -14,7 +14,6 @@
             "name": "Yury Maltsev",
             "email": "dev.yury.maltsev@gmail.com"
         }
-
     ],
 
     "require": {
