@@ -10,13 +10,13 @@ before_install:
 
 install:
 
-  - docker-compose pull --parallel webserver php-fpm
-  - docker-compose build --parallel webserver php-fpm
+  - docker-compose pull webserver php-fpm
+  - docker-compose build webserver php-fpm
   - docker-compose up -d webserver php-fpm
   - docker-compose exec php-fpm composer install --no-interaction
   - docker-compose exec php-fpm Tests/app/bin/console assets:install -v Tests/app
-  - docker-compose exec -w /application/Tests/app php-fpm npm i
-  - docker-compose exec -w /application/Tests/app php-fpm npm run build
+  - docker-compose exec -w /var/www/html/Tests/app php-fpm npm i
+  - docker-compose exec -w /var/www/html/Tests/app php-fpm npm run build
   - docker-compose exec php-fpm npm i
 
 script:
