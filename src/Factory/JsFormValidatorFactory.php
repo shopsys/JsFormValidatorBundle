@@ -2,7 +2,6 @@
 namespace Fp\JsFormValidatorBundle\Factory;
 
 use Fp\JsFormValidatorBundle\Exception\UndefinedFormException;
-use Fp\JsFormValidatorBundle\Form\Constraint\UniqueEntity;
 use Fp\JsFormValidatorBundle\Model\JsConfig;
 use Fp\JsFormValidatorBundle\Model\JsFormElement;
 use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
@@ -562,10 +561,6 @@ class JsFormValidatorFactory
                 if (false !== strpos(strtolower($propName), 'message')) {
                     $item->{$propName} = $this->translateMessage($propValue);
                 }
-            }
-
-            if ($item instanceof \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity) {
-                $item = new UniqueEntity($item, $this->currentElement->getConfig()->getDataClass());
             }
 
             $result[get_class($item)][] = $item;

@@ -10,7 +10,7 @@ export default function FpJsFormValidatorBundleFormConstraintUniqueEntity() {
     this.fields           = [];
     this.errorPath        = null;
     this.ignoreNull       = true;
-    this.entityName       = null;
+    this.entityClass       = null;
 
     this.groups           = [];
 
@@ -44,7 +44,7 @@ export default function FpJsFormValidatorBundleFormConstraintUniqueEntity() {
                 ignoreNull:       this.ignoreNull ? 1 : 0,
                 groups:           this.groups,
 
-                entityName:       this.entityName,
+                entityClass:       this.entityClass,
                 data:             this.getValues(element, this.fields)
             },
             function(response){
