@@ -1,3 +1,4 @@
+.idea
 vendor
 composer.lock
 
@@ -5,7 +6,9 @@ package-lock.json
 node_modules
 
 Tests/app/var
-Tests/app/public/bundles
+Tests/app/bundles
 Tests/app/public/build
 cypress/plugins
-cypress
+cypress/videos
+cypress/screenshots
+cypress/support
