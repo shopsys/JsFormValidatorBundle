@@ -18,6 +18,7 @@ install:
   - docker-compose exec -w /var/www/html/Tests/app php-fpm npm i
   - docker-compose exec -w /var/www/html/Tests/app php-fpm npm run build
   - docker-compose exec php-fpm npm i
+  - docker-compose exec php-fpm npm run test:cypress-install
 
 script:
   - docker-compose exec php-fpm npm run test
