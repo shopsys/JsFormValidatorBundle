@@ -39,7 +39,6 @@
         "symfony/webpack-encore-bundle": "^1.4",
         "symfony/yaml": "*",
         "tgalopin/html-sanitizer-bundle": "^1.1",
-        "twig/extensions": "^1.5",
         "twig/twig": "^2.6"
     },
 
