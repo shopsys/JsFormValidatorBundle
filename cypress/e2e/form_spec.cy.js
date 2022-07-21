@@ -10,7 +10,7 @@ const getErrors = (id) => getParent(id).children();
 
 context('JsFormValidatorBundle', () => {
     beforeEach(() => {
-        cy.visit('http://webserver/')
+        cy.visit('/')
     });
 
     describe('test js validation', () => {
