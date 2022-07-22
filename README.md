@@ -1,5 +1,5 @@
 # FpJsFormValidatorBundle
-[![Build and tests](https://github.com/shopsys/JsFormValidatorBundle/actions/workflows/run-tests.yml/badge.svg?event=status)](https://github.com/shopsys/JsFormValidatorBundle/actions/workflows/run-tests.yml)
+[![Build and tests](https://github.com/shopsys/JsFormValidatorBundle/actions/workflows/run-checks-tests.yaml/badge.svg)](https://github.com/shopsys/JsFormValidatorBundle/actions/workflows/run-checks-tests.yaml)
 [![Total Downloads](https://poser.pugx.org/shopsys/jsformvalidator-bundle/downloads.png)](https://packagist.org/packages/shopsys/jsformvalidator-bundle)
 
 This module enables validation of the Symfony 4 or later forms on the JavaScript side.
