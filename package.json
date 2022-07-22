@@ -5,14 +5,15 @@
   "scripts": {
     "test": "npm run test:unit && npm run test:e2e",
     "test:unit": "jest",
-    "test:e2e": "cypress run"
+    "test:cypress-install": "./node_modules/.bin/cypress install",
+    "test:e2e": "./node_modules/.bin/cypress run"
   },
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.8.3",
     "@babel/preset-env": "^7.8.3",
     "babel-jest": "^25.1.0",
-    "cypress": "^3.8.3",
+    "cypress": "^10.3.0",
     "jest": "^25.1.0"
   }
 }

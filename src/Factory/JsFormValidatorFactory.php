@@ -2,7 +2,6 @@
 namespace Fp\JsFormValidatorBundle\Factory;
 
 use Fp\JsFormValidatorBundle\Exception\UndefinedFormException;
-use Fp\JsFormValidatorBundle\Form\Constraint\UniqueEntity;
 use Fp\JsFormValidatorBundle\Model\JsConfig;
 use Fp\JsFormValidatorBundle\Model\JsFormElement;
 use Symfony\Component\Form\ChoiceList\ChoiceListInterface;
@@ -11,9 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Translation\TranslatorInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Mapping\MetadataInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraint;
-use Symfony\Component\Validator\Mapping\ClassMetadata;
 use Symfony\Component\Validator\Mapping\GetterMetadata;
 use Symfony\Component\Validator\Mapping\PropertyMetadata;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -30,51 +30,51 @@ class JsFormValidatorFactory
     /**
      * @var ValidatorInterface
      */
-    protected $validator;
+    protected ValidatorInterface $validator;
 
     /**
      * @var TranslatorInterface
      */
-    protected $translator;
+    protected TranslatorInterface $translator;
 
     /**
-     * @var \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+     * @var UrlGeneratorInterface
      */
-    protected $router;
+    protected UrlGeneratorInterface $router;
 
     /**
      * @var array
      */
-    protected $config = array();
+    protected array $config = [];
 
     /**
      * @var Form[]
      */
-    protected $queue = array();
+    protected array$queue = [];
 
     /**
-     * @var Form
+     * @var Form|null
      */
-    protected $currentElement = null;
+    protected ?Form $currentElement = null;
 
     /**
      * @var string
      */
-    protected $transDomain;
+    protected string $transDomain;
 
     /**
      * @param ValidatorInterface    $validator
      * @param TranslatorInterface   $translator
-     * @param \Symfony\Component\Routing\Generator\UrlGeneratorInterface $router
+     * @param UrlGeneratorInterface $router
      * @param array                 $config
      * @param string                $domain
      */
     public function __construct(
         ValidatorInterface $validator,
         TranslatorInterface $translator,
-        $router,
-        $config,
-        $domain
+        UrlGeneratorInterface $router,
+        array $config,
+        string $domain
     ) {
         $this->validator   = $validator;
         $this->translator  = $translator;
@@ -88,10 +88,10 @@ class JsFormValidatorFactory
      *
      * @param string $className
      *
-     * @return ClassMetadata
+     * @return MetadataInterface
      * @codeCoverageIgnore
      */
-    protected function getMetadataFor($className)
+    protected function getMetadataFor(string $className): MetadataInterface
     {
         return $this->validator->getMetadataFor($className);
     }
@@ -100,11 +100,11 @@ class JsFormValidatorFactory
      * Translate a single message
      *
      * @param string $message
-     *
+     * @param array $parameters
      * @return string
      * @codeCoverageIgnore
      */
-    protected function translateMessage($message, array $parameters = array())
+    protected function translateMessage(string $message, array $parameters = []): string
     {
         return $this->translator->trans($message, $parameters, $this->transDomain);
     }
@@ -117,7 +117,7 @@ class JsFormValidatorFactory
      * @return string
      * @codeCoverageIgnore
      */
-    protected function generateUrl($route)
+    protected function generateUrl(string $route): string
     {
         return $this->router->generate($route);
     }
@@ -129,18 +129,18 @@ class JsFormValidatorFactory
      *
      * @return mixed
      */
-    public function getConfig($name = null)
+    public function getConfig(?string $name = null)
     {
         if ($name) {
-            return isset($this->config[$name]) ? $this->config[$name] : null;
-        } else {
-            return $this->config;
+            return $this->config[$name] ?? null;
         }
+
+        return $this->config;
     }
 
-    public function createJsConfigModel()
+    public function createJsConfigModel(): JsConfig
     {
-        $result = array();
+        $result = [];
         if (!empty($this->config['routing'])) {
             foreach ($this->config['routing'] as $param => $value) {
                 try {
@@ -159,9 +159,9 @@ class JsFormValidatorFactory
     /**
      * Returns the current queue
      *
-     * @return \Symfony\Component\Form\Form[]
+     * @return Form[]
      */
-    public function getQueue()
+    public function getQueue(): array
     {
         return $this->queue;
     }
@@ -169,11 +169,11 @@ class JsFormValidatorFactory
     /**
      * Add a new form to processing queue
      *
-     * @param \Symfony\Component\Form\Form $form
+     * @param Form $form
      *
-     * @return array
+     * @return void
      */
-    public function addToQueue(Form $form)
+    public function addToQueue(Form $form): void
     {
         $this->queue[$form->getName()] = $form;
     }
@@ -185,7 +185,7 @@ class JsFormValidatorFactory
      *
      * @return bool
      */
-    public function inQueue(Form $form)
+    public function inQueue(Form $form): bool
     {
         return isset($this->queue[$form->getName()]);
     }
@@ -193,13 +193,13 @@ class JsFormValidatorFactory
     /**
      * Removes from the queue elements which are not parent forms and should not be processes
      *
-     * @return $this
+     * @return self
      */
-    public function siftQueue()
+    public function siftQueue(): self
     {
         foreach ($this->queue as $name => $form) {
             $blockName = $form->getConfig()->getOption('block_name');
-            if ('_token' == $name || 'entry' == $blockName || $form->getParent()) {
+            if ('_token' === $name || 'entry' === $blockName || $form->getParent()) {
                 unset($this->queue[$name]);
             }
         }
@@ -210,16 +210,16 @@ class JsFormValidatorFactory
     /**
      * @return JsFormElement[]
      */
-    public function processQueue()
+    public function processQueue(): array
     {
-        $result = array();
+        $result = [];
         foreach ($this->queue as $form) {
             if (null !== ($model = $this->createJsModel($form))) {
                 $result[] = $model;
             }
-        };
+        }
 
-        $this->queue = array();
+        $this->queue = [];
 
         return $result;
     }
@@ -229,9 +229,9 @@ class JsFormValidatorFactory
      *
      * @param Form $form
      *
-     * @return null|JsFormElement
+     * @return JsFormElement|null
      */
-    public function createJsModel(Form $form)
+    public function createJsModel(Form $form): ?JsFormElement
     {
         $this->currentElement = $form;
 
@@ -269,13 +269,13 @@ class JsFormValidatorFactory
     /**
      * Create the JsFormElement for all the children of specified element
      *
-     * @param null|Form $form
+     * @param Form|null $form
      *
      * @return array
      */
-    protected function processChildren($form)
+    protected function processChildren(?Form $form): array
     {
-        $result = array();
+        $result = [];
         // If this field has children - process them
         foreach ($form as $name => $child) {
             if ($this->isProcessableElement($child)) {
@@ -297,15 +297,15 @@ class JsFormValidatorFactory
      *
      * @return string
      */
-    protected function getElementId(Form $form)
+    protected function getElementId(Form $form): string
     {
         /** @var Form $parent */
         $parent = $form->getParent();
         if (null !== $parent) {
             return $this->getElementId($parent) . '_' . $form->getName();
-        } else {
-            return $form->getName();
         }
+
+        return $form->getName();
     }
 
     /**
@@ -313,20 +313,20 @@ class JsFormValidatorFactory
      *
      * @return array
      */
-    protected function getValidationData(Form $form)
+    protected function getValidationData(Form $form): array
     {
         // If parent has metadata
         $parent = $form->getParent();
         if ($parent && null !== $parent->getConfig()->getDataClass()) {
-            $classMetadata = $metadata = $this->getMetadataFor($parent->getConfig()->getDataClass());
+            $classMetadata = $this->getMetadataFor($parent->getConfig()->getDataClass());
             if ($classMetadata->hasPropertyMetadata($form->getName())) {
                 $metadata = $classMetadata->getPropertyMetadata($form->getName());
-                /** @var PropertyMetadata $item */
+                /** @var PropertyMetadata[] $metadata */
                 foreach ($metadata as $item) {
                     $this->composeValidationData(
                         $parentData,
                         $item->getConstraints(),
-                        $getters = !empty($item->getters) ? (array)$item->getters : array()
+                        !empty($item->getters) ? (array)$item->getters : []
                     );
                 }
             }
@@ -337,17 +337,17 @@ class JsFormValidatorFactory
             $this->composeValidationData(
                 $ownData,
                 $metadata->getConstraints(),
-                $getters = !empty($metadata->getters) ? (array)$metadata->getters : array()
+                !empty($metadata->getters) ? (array)$metadata->getters : []
             );
         }
         // If has constraints in a form element
         $this->composeValidationData(
             $formData,
             (array)$form->getConfig()->getOption('constraints'),
-            array()
+            []
         );
 
-        $result = array();
+        $result = [];
         $groups = $this->getValidationGroups($form);
 
         if (!empty($parentData)) {
@@ -386,26 +386,26 @@ class JsFormValidatorFactory
     }
 
     /**
-     * @param array            $container
+     * @param array|null       $container
      * @param Constraint[]     $constraints
      * @param GetterMetadata[] $getters
      *
      * @return void
      */
-    public function composeValidationData(&$container, $constraints, $getters)
+    public function composeValidationData(?array &$container, array $constraints, array $getters): void
     {
-        if (null == $container) {
-            $container = array();
+        if (null === $container) {
+            $container = [];
         }
         if ($getters) {
             if (!isset($container['getters'])) {
-                $container['getters'] = array();
+                $container['getters'] = [];
             }
             $container['getters'] = array_merge($container['getters'], $this->parseGetters($getters));
         }
         if ($constraints) {
             if (!isset($container['constraints'])) {
-                $container['constraints'] = array();
+                $container['constraints'] = [];
             }
             $container['constraints'] = array_merge($container['constraints'], $this->parseConstraints($constraints));
         }
@@ -420,7 +420,7 @@ class JsFormValidatorFactory
      */
     protected function getValidationGroups(Form $form)
     {
-        $result = array('Default');
+        $result = ['Default'];
         $groups = $form->getConfig()->getOption('validation_groups');
 
         if (empty($groups)) {
@@ -446,7 +446,7 @@ class JsFormValidatorFactory
      *
      * @return bool
      */
-    protected function isProcessableElement($element)
+    protected function isProcessableElement($element): bool
     {
         return ($element instanceof Form) && (!is_a($element->getConfig()->getType(), HiddenType::class, true));
     }
@@ -460,7 +460,7 @@ class JsFormValidatorFactory
      *
      * @return array
      */
-    protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers)
+    protected function normalizeViewTransformers(FormInterface $form, array $viewTransformers): array
     {
         $config = $form->getConfig();
 
@@ -484,11 +484,11 @@ class JsFormValidatorFactory
      *
      * @return array
      */
-    protected function parseTransformers(array $transformers)
+    protected function parseTransformers(array $transformers): array
     {
-        $result = array();
+        $result = [];
         foreach ($transformers as $trans) {
-            $item = array();
+            $item = [];
 
             $reflect    = new \ReflectionClass($trans);
             $properties = $reflect->getProperties();
@@ -511,7 +511,7 @@ class JsFormValidatorFactory
      *
      * @return mixed
      */
-    protected function getTransformerParam(DataTransformerInterface $transformer, $paramName)
+    protected function getTransformerParam(DataTransformerInterface $transformer, string $paramName)
     {
         $reflection = new \ReflectionProperty($transformer, $paramName);
         $reflection->setAccessible(true);
@@ -538,7 +538,7 @@ class JsFormValidatorFactory
      */
     protected function parseGetters(array $getters)
     {
-        $result = array();
+        $result = [];
         foreach ($getters as $getter) {
             $result[$getter->getName()] = $this->parseConstraints((array)$getter->getConstraints());
         }
@@ -555,17 +555,13 @@ class JsFormValidatorFactory
      */
     protected function parseConstraints(array $constraints)
     {
-        $result = array();
+        $result = [];
         foreach ($constraints as $item) {
             // Translate messages if need and add to result
             foreach ($item as $propName => $propValue) {
-                if (false !== strpos(strtolower($propName), 'message')) {
+                if (false !== stripos($propName, 'message')) {
                     $item->{$propName} = $this->translateMessage($propValue);
                 }
-            }
-
-            if ($item instanceof \Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity) {
-                $item = new UniqueEntity($item, $this->currentElement->getConfig()->getDataClass());
             }
 
             $result[get_class($item)][] = $item;
@@ -580,18 +576,17 @@ class JsFormValidatorFactory
     }
 
     /**
-     * @param string $formName
+     * @param string|null $formName
      * @param bool   $onLoad
      *
      * @throws \Fp\JsFormValidatorBundle\Exception\UndefinedFormException
      * @return string
      */
-    public function getJsValidatorString($formName = null, $onLoad = true)
+    public function getJsValidatorString(?string $formName = null, bool $onLoad = true): string
     {
-        $onLoad = $onLoad ? 'true' : 'false';
         $this->siftQueue();
 
-        $models = array();
+        $models = [];
         // Process just the specified form
         if ($formName) {
             if (!isset($this->queue[$formName])) {
@@ -608,9 +603,10 @@ class JsFormValidatorFactory
             return '';
         }
 
-        $result = array();
+        $result = [];
+        $onLoadString = $onLoad ? 'true' : 'false';
         foreach ($models as $model) {
-            $result[] = "FpJsFormValidator.addModel({$model}, {$onLoad});";
+            $result[] = "FpJsFormValidator.addModel({$model}, {$onLoadString});";
         }
 
         return implode("\n", $result);

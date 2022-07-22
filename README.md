@@ -1,19 +1,21 @@
 # FpJsFormValidatorBundle
-[![Build Status](https://travis-ci.com/formapro/JsFormValidatorBundle.svg?branch=master)](https://app.travis-ci.com/formapro/JsFormValidatorBundle)
-[![Total Downloads](https://poser.pugx.org/fp/jsformvalidator-bundle/downloads.png)](https://packagist.org/packages/fp/jsformvalidator-bundle)
+[![Build and tests](https://github.com/shopsys/JsFormValidatorBundle/actions/workflows/run-tests.yml/badge.svg?event=status)](https://github.com/shopsys/JsFormValidatorBundle/actions/workflows/run-tests.yml)
+[![Total Downloads](https://poser.pugx.org/shopsys/jsformvalidator-bundle/downloads.png)](https://packagist.org/packages/shopsys/jsformvalidator-bundle)
 
 This module enables validation of the Symfony 4 or later forms on the JavaScript side.
 It converts form type constraints into JavaScript validation rules.
 
-If you have Symfony 4.* - you need to use [Version 1.6.x-dev](https://github.com/formapro/JsFormValidatorBundle/tree/1.6)
+If you have Symfony 4.4 or 5.x - you need to use [Version 1.7.x](https://github.com/shopsys/JsFormValidatorBundle/tree/1.7)
 
-If you have Symfony 3.1.* - you need to use [Version 1.5.*](https://github.com/formapro/JsFormValidatorBundle/tree/1.5)
+If you have Symfony 4.* - you need to use [Version 1.6.x-dev](https://github.com/shopsys/JsFormValidatorBundle/tree/1.6)
 
-If you have Symfony 3.0.* - you need to use [Version 1.4.*](https://github.com/formapro/JsFormValidatorBundle/tree/1.4)
+If you have Symfony 3.1.* - you need to use [Version 1.5.*](https://github.com/shopsys/JsFormValidatorBundle/tree/1.5)
 
-If you have Symfony 2.8.* or 2.7.* - you need to use [Version 1.3.*](https://github.com/formapro/JsFormValidatorBundle/tree/1.3)
+If you have Symfony 3.0.* - you need to use [Version 1.4.*](https://github.com/shopsys/JsFormValidatorBundle/tree/1.4)
 
-If you have Symfony 2.6.* or less - you need to use [Version 1.2.*](https://github.com/formapro/JsFormValidatorBundle/tree/1.2)
+If you have Symfony 2.8.* or 2.7.* - you need to use [Version 1.3.*](https://github.com/shopsys/JsFormValidatorBundle/tree/1.3)
+
+If you have Symfony 2.6.* or less - you need to use [Version 1.2.*](https://github.com/shopsys/JsFormValidatorBundle/tree/1.2)
 
 ## 1 Installation<a name="p_1"></a>
 
@@ -21,11 +23,11 @@ If you have Symfony 2.6.* or less - you need to use [Version 1.2.*](https://gith
 
 Run in terminal:
 ```bash
-$ composer require "fp/jsformvalidator-bundle":"dev-master"
+$ composer require "shopsys/jsformvalidator-bundle":"dev-master"
 ```
 Or if you do not want to unexpected problems better to use exact version.
 ```bash
-$ composer require "fp/jsformvalidator-bundle":"v1.6.*"
+$ composer require "shopsys/jsformvalidator-bundle":"v1.6.*"
 ```
 
 ### 1.2 Enable javascript libraries
@@ -110,3 +112,20 @@ If you render forms with a some level of customization - read [this note](src/Re
 11. [onValidate callback](src/Resources/doc/3_11.md)
 12. [Run validation on custom event](Resources/doc/3_12.md)
 13. [Collections validation](src/Resources/doc/3_13.md)
+
+## 4 Local development <a name="p_4"></a>
+### Requirements
+- docker with docker-compose
+- make
+
+### Run application
+```bash
+docker-compose up -d --build
+make install
+# test form will be available at http://127.0.0.1:8080
+```
+
+### Run tests
+```bash
+make tests
+```

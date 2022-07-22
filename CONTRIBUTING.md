@@ -38,7 +38,7 @@ npm run test
 Basically the bundle covered by unit jest's test and e2e cypress test.
 The main test case is placed in ```Tests/Functional/MainFunctionalTest.php```
 Unit tests are placed in main resource folder with suffix ```.test.js```
-e2e test is placed in cypress folder in project root ```cypress/integration/form_spec.js```
+e2e test is placed in cypress folder in project root ```cypress/e2e/form_spec.cy.js```
 
 The main idea of unit tests is covered constrain logic.
 The main idea of e2e test is visit route with example form with all symfony constraint and find used error messages.
