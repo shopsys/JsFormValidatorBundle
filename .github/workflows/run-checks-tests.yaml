@@ -28,10 +28,10 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16
-            -   name: Setup PHP 8.1
+            -   name: Setup PHP 8.3
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.1
+                    php-version: 8.3
                     extensions: pdo_sqlite
                     tools: symfony
             -   name: Clone repository
