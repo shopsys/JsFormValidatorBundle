@@ -32,12 +32,12 @@
         "symfony/flex": "^1.17",
         "symfony/framework-bundle": "*",
         "symfony/intl": "*",
-        "symfony/security-bundle": "*",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
         "symfony/webpack-encore-bundle": "^1.4",
         "symfony/yaml": "*",
         "symfony/html-sanitizer": "*",
+        "symfony/security-csrf": "*",
         "twig/twig": "^2.6"
     },
 
