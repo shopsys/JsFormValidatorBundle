@@ -34,7 +34,7 @@
         "symfony/intl": "*",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
-        "symfony/webpack-encore-bundle": "^1.4",
+        "symfony/webpack-encore-bundle": "*",
         "symfony/yaml": "*",
         "symfony/html-sanitizer": "*",
         "symfony/security-csrf": "*",
