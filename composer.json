@@ -18,8 +18,9 @@
 
     "require": {
         "php": "^8.3",
-        "symfony/form": "^6.4",
-        "symfony/validator": "^6.4"
+        "symfony/form": "^7.1",
+        "symfony/validator": "^7.1",
+        "symfony/security-csrf": "^7.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -32,13 +33,13 @@
         "symfony/flex": "^1.17",
         "symfony/framework-bundle": "*",
         "symfony/intl": "*",
-        "symfony/security-bundle": "*",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
-        "symfony/webpack-encore-bundle": "^1.4",
+        "symfony/webpack-encore-bundle": "*",
         "symfony/yaml": "*",
-        "tgalopin/html-sanitizer-bundle": "^1.1",
-        "twig/twig": "^2.6"
+        "symfony/html-sanitizer": "*",
+        "twig/twig": "^3.0.4",
+        "composer/composer": "^1.0.2|^2.0"
     },
 
     "suggest": {
@@ -62,7 +63,7 @@
         },
         "symfony": {
             "allow-contrib": true,
-            "require": "6.4.*"
+            "require": "^7.1"
         }
     },
     "scripts": {

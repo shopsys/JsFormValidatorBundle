@@ -15,7 +15,7 @@ class Configuration implements ConfigurationInterface
      * @codeCoverageIgnore
      * @return TreeBuilder
      */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         // A tree builder without a root node is deprecated since Symfony 4.2 and will not be supported anymore in 5.0.
         if (Kernel::VERSION_ID < 40212) {
