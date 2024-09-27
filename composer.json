@@ -18,8 +18,8 @@
 
     "require": {
         "php": "^8.3",
-        "symfony/form": "^6.4",
-        "symfony/validator": "^6.4"
+        "symfony/form": "^6.4 | ^7.1",
+        "symfony/validator": "^6.4 | ^7.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
@@ -62,7 +62,7 @@
         },
         "symfony": {
             "allow-contrib": true,
-            "require": "6.4.*"
+            "require": "^6.4 | ^7.1"
         }
     },
     "scripts": {
