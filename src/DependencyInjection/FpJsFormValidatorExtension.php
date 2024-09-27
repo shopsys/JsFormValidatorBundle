@@ -34,7 +34,7 @@ class FpJsFormValidatorExtension extends Extension
      * @codeCoverageIgnore
      * @return string
      */
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'fp_js_form_validator';
     }
