@@ -29,7 +29,7 @@
         "symfony/console": "*",
         "symfony/dotenv": "*",
         "symfony/expression-language": "*",
-        "symfony/flex": "^1.17",
+        "symfony/flex": "^2.4",
         "symfony/framework-bundle": "*",
         "symfony/intl": "*",
         "symfony/translation": "*",
