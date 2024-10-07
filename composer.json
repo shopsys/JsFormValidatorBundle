@@ -17,28 +17,27 @@
     ],
 
     "require": {
-        "php": ">=7.4",
-        "symfony/form": "^4.4|^5.0",
-        "symfony/validator": "^4.4|^5.0"
+        "php": "^8.3",
+        "symfony/form": "^6.4 | ^7.1",
+        "symfony/validator": "^6.4 | ^7.1"
     },
     "require-dev": {
         "roave/security-advisories": "dev-latest",
         "ext-pdo_sqlite": "*",
         "erusev/parsedown": "^1.6",
-        "sensio/framework-extra-bundle": "^5.1",
         "symfony/asset": "*",
         "symfony/console": "*",
         "symfony/dotenv": "*",
         "symfony/expression-language": "*",
-        "symfony/flex": "^1.17",
+        "symfony/flex": "^2.4",
         "symfony/framework-bundle": "*",
         "symfony/intl": "*",
-        "symfony/security-bundle": "*",
         "symfony/translation": "*",
         "symfony/twig-bundle": "*",
-        "symfony/webpack-encore-bundle": "^1.4",
+        "symfony/webpack-encore-bundle": "*",
         "symfony/yaml": "*",
-        "tgalopin/html-sanitizer-bundle": "^1.1",
+        "symfony/html-sanitizer": "*",
+        "symfony/security-csrf": "*",
         "twig/twig": "^2.6"
     },
 
@@ -59,11 +58,11 @@
 
     "extra": {
         "branch-alias": {
-            "dev-master": "1.7-dev"
+            "dev-master": "2.0-dev"
         },
         "symfony": {
             "allow-contrib": true,
-            "require": "5.4.*"
+            "require": "^6.4 | ^7.1"
         }
     },
     "scripts": {

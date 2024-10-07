@@ -10,9 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/", name="default_index")
-     */
+    #[Route('/', 'default')]
     public function index(Request $request): Response
     {
         $testForm = $this->createForm(TestForm::class);

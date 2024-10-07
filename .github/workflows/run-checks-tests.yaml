@@ -19,8 +19,12 @@ jobs:
                 with:
                     access_token: ${{ github.token }}
     build-and-test:
+        name: Build application ${{ matrix.composer-preferred-dependencies }} and run tests
         runs-on: ubuntu-latest
         needs: cancel
+        strategy:
+            matrix:
+                composer-preferred-dependencies: ['--prefer-lowest', '']
         steps:
             -   name: Install cypress dependencies
                 run: sudo apt-get install -y libgtk2.0-0 libgtk-3-0 libgbm-dev libnotify-dev libgconf-2-4 libnss3 libxss1 libasound2 libxtst6 xauth xvfb
@@ -28,17 +32,17 @@ jobs:
                 uses: actions/setup-node@v3
                 with:
                     node-version: 16
-            -   name: Setup PHP 8.1
+            -   name: Setup PHP 8.3
                 uses: shivammathur/setup-php@v2
                 with:
-                    php-version: 8.1
+                    php-version: 8.3
                     extensions: pdo_sqlite
                     tools: symfony
             -   name: Clone repository
                 uses: actions/checkout@v3
-            -   name: Install composer dependencies
+            -   name: Install composer dependencies ${{ matrix.composer-preferred-dependencies }}
                 run: |
-                    composer install --no-interaction --optimize-autoloader
+                    composer update --no-interaction --optimize-autoloader ${{ matrix.composer-preferred-dependencies }}
                     Tests/app/bin/console assets:install -v Tests/app
             -   name: Install and build test app JS
                 run: |

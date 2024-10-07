@@ -5,6 +5,8 @@
 This module enables validation of the Symfony 4 or later forms on the JavaScript side.
 It converts form type constraints into JavaScript validation rules.
 
+If you have Symfony ^6.4 or ^7.1 - you need to use [Version 2.0.x](https://github.com/shopsys/JsFormValidatorBundle/tree/2.0)
+
 If you have Symfony 4.4 or 5.x - you need to use [Version 1.7.x](https://github.com/shopsys/JsFormValidatorBundle/tree/1.7)
 
 If you have Symfony 4.* - you need to use [Version 1.6.x-dev](https://github.com/shopsys/JsFormValidatorBundle/tree/1.6)
@@ -27,7 +29,7 @@ $ composer require "shopsys/jsformvalidator-bundle":"dev-master"
 ```
 Or if you do not want to unexpected problems better to use exact version.
 ```bash
-$ composer require "shopsys/jsformvalidator-bundle":"v1.6.*"
+$ composer require "shopsys/jsformvalidator-bundle":"v2.0.*"
 ```
 
 ### 1.2 Enable javascript libraries
@@ -70,17 +72,6 @@ And include new entry in your template
 {% endblock %}
 ```
 
-### 1.4 Add routes<a name="p_1_4"></a>
-
-If you use the UniqueEntity constraint, then you have to include the next part to your routing config: app/config/routing.yml
-```yaml
-# ...
-fp_js_form_validator:
-    resource: "@FpJsFormValidatorBundle/Resources/config/routing.xml"
-    prefix: /fp_js_form_validator
-```
-Make sure that your security settings do not prevent these routes.
-
 ## 2 Usage<a name="p_2"></a>
 
 After the previous steps the javascript validation will be enabled automatically for all your forms.
@@ -115,12 +106,12 @@ If you render forms with a some level of customization - read [this note](src/Re
 
 ## 4 Local development <a name="p_4"></a>
 ### Requirements
-- docker with docker-compose
+- docker with docker compose
 - make
 
 ### Run application
 ```bash
-docker-compose up -d --build
+docker compose up -d --build
 make install
 # test form will be available at http://127.0.0.1:8080
 ```

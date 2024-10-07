@@ -19,13 +19,6 @@ class TestForm extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $testedChoices = [
-            'Not null' => 'a',
-            'True' => 'b',
-            'False' => 'c',
-            'Null' => 'd',
-        ];
-
         $builder
             ->add('notBlank', TextType::class, [
                 'constraints' => [
@@ -109,8 +102,7 @@ class TestForm extends AbstractType
                     new Constraints\Range([
                         'min' => 120,
                         'max' => 180,
-                        'minMessage' => 'You must be at least {{ limit }}',
-                        'maxMessage' => 'You cannot be taller than {{ limit }}',
+                        'notInRangeMessage' => 'Please fill value between {{ min }} and {{ max }}',
                     ]),
                 ],
             ])

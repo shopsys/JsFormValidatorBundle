@@ -1,4 +1,4 @@
-FROM php:8.1-fpm-bullseye
+FROM php:8.3-fpm-bullseye
 
 RUN apt-get update && apt-get install -y wget gnupg g++ locales unzip dialog apt-utils git && apt-get clean
 
