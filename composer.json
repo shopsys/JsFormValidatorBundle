@@ -38,7 +38,7 @@
         "symfony/yaml": "*",
         "symfony/html-sanitizer": "*",
         "symfony/security-csrf": "*",
-        "twig/twig": "^2.6"
+        "twig/twig": "^2.13"
     },
 
     "suggest": {
